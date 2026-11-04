@@ -84,3 +84,4 @@ export const StatsRibbon: React.FC<StatsRibbonProps> = ({ projects }) => {
     </div>
   );
 };
+

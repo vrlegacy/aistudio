@@ -2,170 +2,111 @@ import { Project } from '../types/project';
 
 /**
  * =========================================================================
- * YOUR STUDIO PROJECTS REGISTRY
+ * VISHWAS (vrlegacy) STUDIO PROJECTS REGISTRY
  * =========================================================================
- * Add your applications here anytime you build something new!
- * 
- * Platforms supported: 'web' | 'ios' | 'android' | 'macos' | 'ai' | 'cross-platform'
- * Status options:     'live' | 'beta' | 'in-progress' | 'open-source' | 'archived'
- * Accent colors:      'indigo' | 'emerald' | 'amber' | 'violet' | 'sky' | 'rose' | 'cyan'
+ * Living showcase of native macOS, iOS, Web, and AI applications.
  */
 
 export const initialProjects: Project[] = [
   {
-    id: "zenith-mac",
-    title: "Zenith MenuBar",
-    tagline: "Ultra-lightweight system metrics & developer switcher for macOS",
-    description: "A native macOS menu bar companion designed for engineers. Monitors CPU, GPU, memory pressure, and local Docker/port listeners with zero background battery impact. Built with Swift and AppKit.",
+    id: "notchpeek",
+    title: "NotchPeek",
+    tagline: "Touch the notch with your cursor to open Mission Control",
+    description: "A tiny, elegant macOS menu bar app. Push your cursor up into the camera notch at the top of your MacBook screen and Mission Control opens instantly. On screens without a notch, a strip at the top center works the exact same way. Designed with zero background battery impact for Apple Silicon and Intel Macs.",
     platform: "macos",
-    category: "Developer Utility",
+    category: "macOS System Utility",
     status: "live",
     featured: true,
-    date: "2024",
+    date: "2026",
     accentColor: "sky",
-    tags: ["Swift", "AppKit", "macOS", "Metal", "SystemKit"],
+    tags: ["Swift", "macOS 12+", "AppKit", "Mission Control", "Menu Bar", "Apple Silicon", "Intel"],
     links: {
-      url: "https://zenith.vishwas.studio",
-      github: "https://github.com/vishwas/zenith-macos",
-      macAppStore: "https://apps.apple.com/app/zenith-menubar",
-      docs: "https://github.com/vishwas/zenith-macos#architecture"
+      url: "https://vrlegacy.github.io/notchpeek/",
+      github: "https://github.com/vrlegacy/notchpeek",
+      macAppStore: "https://github.com/vrlegacy/notchpeek/releases/latest/download/NotchPeek-1.0.dmg",
+      docs: "https://github.com/vrlegacy/notchpeek#readme"
     },
     highlights: [
-      "Native Apple Silicon optimized binary (under 3.2MB)",
-      "Zero-overhead polling via kernel Mach APIs",
-      "One-click localhost port kill & docker container inspector",
-      "Dynamic notch and menu bar widget styling"
+      "Instant Mission Control trigger simply by moving cursor into camera notch",
+      "Configurable trigger delay (Instant, Short, Medium, Long) to prevent accidental firing",
+      "Completely background-friendly with optional menu bar icon & launch at login",
+      "Universal binary supporting macOS 12 Monterey or later (Apple Silicon M1-M5 & Intel)"
     ],
-    stats: "8.4k+ Downloads • 4.9 ★",
-    previewImage: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80"
+    stats: "Free & Open Source • macOS 12+",
+    previewImage: "https://vrlegacy.github.io/notchpeek/icon.png"
   },
   {
-    id: "chronos-ios",
-    title: "Chronos Focus & Habit Tracker",
-    tagline: "Minimalist offline-first habit loop app with Interactive Widgets",
-    description: "An iOS habit system built around atomic micro-routines and tactile haptic feedback. Utilizes iOS 17/18 Interactive Live Activities and Dynamic Island tracking without intrusive notifications.",
-    platform: "ios",
-    category: "Productivity & Health",
+    id: "faccy",
+    title: "Faccy",
+    tagline: "Lock any Mac app behind your face, Touch ID, or a password",
+    description: "A local-first macOS security and privacy accessory app for Apple Silicon Macs. Processes your built-in camera feed with Apple's Vision framework to verify your face before opening chosen applications, with Touch ID and 60,000-round iterated SHA-256 salted password fallbacks. Never stores photos—only on-device feature prints.",
+    platform: "macos",
+    category: "Privacy & Biometric Security",
     status: "live",
     featured: true,
-    date: "2024",
-    accentColor: "rose",
-    tags: ["SwiftUI", "SwiftData", "iOS 18", "WidgetKit", "Haptics"],
+    date: "2026",
+    accentColor: "violet",
+    tags: ["Swift", "macOS 14+", "Apple Vision Framework", "Touch ID", "LocalAuthentication", "Security", "Apple Silicon"],
     links: {
-      url: "https://chronos.vishwas.studio",
-      github: "https://github.com/vishwas/chronos-ios",
-      appStore: "https://apps.apple.com/app/chronos-habits",
-      demo: "https://twitter.com/vishwas/status/chronos-demo"
+      url: "https://vrlegacy.github.io/Faccy/",
+      github: "https://github.com/vrlegacy/Faccy",
+      macAppStore: "https://github.com/vrlegacy/Faccy/releases",
+      docs: "https://github.com/vrlegacy/Faccy#readme"
     },
     highlights: [
-      "Offline-first synchronization with zero telemetry",
-      "Dynamic Island & Lock Screen Live Activities",
-      "Interactive homescreen widgets for quick logging",
-      "Sub-16ms smooth SwiftUI animations with custom spring curves"
+      "Vision framework on-device face biometric verification with zero photo storage",
+      "Dynamic Island-style compact verification pill sized to the camera notch",
+      "Simultaneous Face Auth and Touch ID authentication (whichever matches first unlocks)",
+      "System-wide watchdog intercepting launches from Dock, Spotlight, and Finder",
+      "Auto-locks on screen lock, display sleep, or customizable idle timer"
     ],
-    stats: "2.5k Active Testers • App Store",
-    previewImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+    stats: "v0.2.0 • macOS 14+ Sonoma/Sequoia",
+    previewImage: "https://vrlegacy.github.io/Faccy/logo.png"
   },
   {
-    id: "omni-agent-web",
-    title: "OmniFlow AI Studio",
-    tagline: "Autonomous visual LLM pipeline builder and prompt evaluation sandbox",
-    description: "A full-stack web application for visual node-based generative AI workflow creation. Connects multi-modal Gemini, Claude, and local Ollama models with automated evaluation benchmarks and real-time streaming output.",
+    id: "civix-platform",
+    title: "Civix Civic Engagement Platform",
+    tagline: "Digital civic engagement and community petition platform",
+    description: "A full-stack web platform enabling citizen petitions, digital civic engagement, and verified community initiatives with transparent tracking and participatory democracy workflows.",
     platform: "web",
-    category: "AI & Developer Tool",
-    status: "live",
-    featured: true,
-    date: "2024",
-    accentColor: "indigo",
-    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "FastAPI", "WebSockets"],
-    links: {
-      url: "https://omniflow.vishwas.studio",
-      github: "https://github.com/vishwas/omniflow-ai-studio",
-      demo: "https://youtu.be/omniflow-preview"
-    },
-    highlights: [
-      "Canvas-based node graph with infinite zoom & auto-layout",
-      "Token-by-token streaming over HTTP/2 Server-Sent Events",
-      "Side-by-side model comparison matrix with latency scoring",
-      "Local export to Python scripts & REST API endpoints"
-    ],
-    stats: "450+ GitHub Stars • Production Ready",
-    previewImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    id: "pulsar-android",
-    title: "Pulsar Audio Synthesizer",
-    tagline: "Low-latency polyphonic synthesizer engine with Material You",
-    description: "A modern Android synthesizer app leveraging the Android Oboe C++ audio library for sub-8ms audio buffer latency. Features 4 customizable oscillators, FM modulation, and a custom touch pad keyboard.",
-    platform: "android",
-    category: "Music & Audio Tech",
-    status: "beta",
-    featured: false,
-    date: "2023",
-    accentColor: "emerald",
-    tags: ["Kotlin", "Jetpack Compose", "C++ Oboe", "NDK", "Material 3"],
-    links: {
-      github: "https://github.com/vishwas/pulsar-android",
-      playStore: "https://play.google.com/store/apps/details?id=studio.vishwas.pulsar",
-      url: "https://pulsar.vishwas.studio"
-    },
-    highlights: [
-      "Real-time audio processing using native C++ via JNI",
-      "Dynamic Material You theming adapting to OS wallpaper",
-      "Multi-touch polyphonic touch ribbon with pressure control",
-      "Preset saving and MIDI controller support via USB-C"
-    ],
-    stats: "Open Beta on Google Play",
-    previewImage: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    id: "neural-diff-ai",
-    title: "NeuralDiff CLI & Action",
-    tagline: "AI-powered contextual git diff explainer and code review assistant",
-    description: "A terminal CLI tool and GitHub Action that analyzes pull requests using local or cloud LLMs. Produces semantic impact graphs, breaking change alerts, and security checklists before merging.",
-    platform: "ai",
-    category: "DevOps & CLI",
+    category: "Web Application & Civic Tech",
     status: "open-source",
     featured: false,
-    date: "2023",
-    accentColor: "amber",
-    tags: ["Rust", "Python", "CLI", "GitHub Actions", "Tree-sitter"],
+    date: "2024",
+    accentColor: "indigo",
+    tags: ["TypeScript", "React", "Node.js", "Express", "REST API", "Tailwind CSS"],
     links: {
-      github: "https://github.com/vishwas/neural-diff",
-      url: "https://crates.io/crates/neural-diff",
-      docs: "https://github.com/vishwas/neural-diff#installation"
+      github: "https://github.com/vrlegacy/Civix-Digital-Civic-Engagement-Petition-Platform"
     },
     highlights: [
-      "Tree-sitter AST parsing for 12+ programming languages",
-      "Generates human-readable summaries for massive 1000+ line diffs",
-      "Zero telemetry option with local Ollama runtime",
-      "Fast Rust binary with sub-100ms startup"
+      "Interactive digital petition creation with signature verification",
+      "Community dashboard and civic milestone tracking",
+      "Secure REST backend architecture with role-based access"
     ],
-    stats: "1.2k Stars • Crates.io",
-    previewImage: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=1200&q=80"
+    stats: "Open Source • Infosys Springboard",
+    previewImage: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    id: "vortex-terminal-mac",
-    title: "Vortex Shell Accelerator",
-    tagline: "GPU-accelerated terminal assistant with inline command explanations",
-    description: "A native macOS terminal wrapper that augments Zsh and Fish with contextual predictive completions, historical command bookmarks, and instant documentation lookup without leaving the prompt.",
-    platform: "macos",
-    category: "Developer Utility",
-    status: "in-progress",
+    id: "diabetic-retinopathy-ml",
+    title: "Diabetic Retinopathy Detection System",
+    tagline: "Deep learning computer vision model for diabetic retinal analysis",
+    description: "A machine learning system engineered to detect diabetes and retinal abnormalities from fundus imagery. Uses convolutional neural networks for automated feature extraction, grading severity, and assisting early diagnostic intervention.",
+    platform: "ai",
+    category: "Healthcare & Computer Vision",
+    status: "open-source",
     featured: false,
     date: "2024",
-    accentColor: "violet",
-    tags: ["Swift", "Metal", "PTY", "Zsh", "macOS Sonoma"],
+    accentColor: "emerald",
+    tags: ["Python", "PyTorch", "OpenCV", "CNN", "Computer Vision", "Machine Learning"],
     links: {
-      github: "https://github.com/vishwas/vortex-shell",
-      url: "https://vortex.vishwas.studio"
+      github: "https://github.com/vrlegacy/Diabetic-retinopathy-detection-using-machine-learning-concept"
     },
     highlights: [
-      "Sub-millisecond frame rendering using Apple Metal",
-      "Inline man page parser with interactive flag toggles",
-      "Encrypted sync for shell history across Mac workstations"
+      "Automated classification of retinal fundus images across severity stages",
+      "Preprocessing pipeline with contrast-limited adaptive histogram equalization (CLAHE)",
+      "High-accuracy convolutional neural network architecture"
     ],
-    stats: "Private Preview",
-    previewImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80"
+    stats: "Research & Diagnostic ML",
+    previewImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80"
   }
 ];

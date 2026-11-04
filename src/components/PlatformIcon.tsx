@@ -144,3 +144,4 @@ export function getPlatformBadgeStyle(platform: Platform): { bg: string; text: s
       };
   }
 }
+

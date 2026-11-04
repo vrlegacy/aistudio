@@ -116,3 +116,4 @@ npx netlify deploy --prod --dir=dist
 
 ### GitHub Pages
 Set the build output directory to `dist/` in GitHub Actions or your host configuration.
+

@@ -2,8 +2,8 @@ import { Project, StudioConfig } from '../types/project';
 import { initialProjects } from '../data/projects';
 import { initialStudioConfig } from '../data/studioConfig';
 
-const PROJECTS_STORAGE_KEY = 'vishwas_studio_projects_v1';
-const CONFIG_STORAGE_KEY = 'vishwas_studio_config_v1';
+const PROJECTS_STORAGE_KEY = 'vrlegacy_studio_projects_v2';
+const CONFIG_STORAGE_KEY = 'vrlegacy_studio_config_v2';
 
 export function getStoredProjects(): Project[] {
   try {
@@ -81,3 +81,4 @@ export function saveStoredConfig(config: StudioConfig): void {
 export function generateProjectsTypeScript(projects: Project[]): string {
   return `import { Project } from '../types/project';\n\nexport const initialProjects: Project[] = ${JSON.stringify(projects, null, 2)};\n`;
 }
+

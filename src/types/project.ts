@@ -46,3 +46,4 @@ export interface StudioConfig {
     website?: string;
   };
 }
+

@@ -28,6 +28,10 @@ export interface Project {
   stats?: string;          // e.g. "4.9 ★ (1.2k reviews)", "15k+ Monthly Users"
   previewImage?: string;   // Image URL or mock
   accentColor?: string;    // e.g. "indigo", "emerald", "amber", "violet", "sky", "rose"
+  requirements?: string;   // e.g. "macOS 14+ (Apple Silicon)", "macOS 12+"
+  architecture?: string;   // e.g. "On-device Apple Vision Framework, zero cloud telemetry"
+  installCmd?: string;     // e.g. "git clone https://... && bash build.command"
+  license?: string;        // e.g. "MIT"
 }
 
 export interface StudioConfig {

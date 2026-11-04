@@ -11,14 +11,17 @@ export const initialProjects: Project[] = [
   {
     id: "notchpeek",
     title: "NotchPeek",
-    tagline: "Touch the notch with your cursor to open Mission Control",
+    tagline: "Touch the camera notch with your cursor to open Mission Control",
     description: "A tiny, elegant macOS menu bar app. Push your cursor up into the camera notch at the top of your MacBook screen and Mission Control opens instantly. On screens without a notch, a strip at the top center works the exact same way. Designed with zero background battery impact for Apple Silicon and Intel Macs.",
     platform: "macos",
     category: "macOS System Utility",
     status: "live",
     featured: true,
     date: "2026",
-    accentColor: "sky",
+    license: "MIT License",
+    requirements: "macOS 12 Monterey or later (Apple Silicon M1–M5 & Intel)",
+    architecture: "Lightweight background event listener, zero battery drain, native Mission Control triggering",
+    installCmd: "git clone https://github.com/vrlegacy/notchpeek.git && cd notchpeek && bash build.command",
     tags: ["Swift", "macOS 12+", "AppKit", "Mission Control", "Menu Bar", "Apple Silicon", "Intel"],
     links: {
       url: "https://vrlegacy.github.io/notchpeek/",
@@ -45,7 +48,10 @@ export const initialProjects: Project[] = [
     status: "live",
     featured: true,
     date: "2026",
-    accentColor: "violet",
+    license: "MIT License",
+    requirements: "macOS 14 Sonoma or later (Apple Silicon Mac: M1, M2, M3, M4, M5)",
+    architecture: "On-device Apple Vision Framework face feature prints, LocalAuthentication biometric Touch ID, zero photo persistence",
+    installCmd: "git clone https://github.com/vrlegacy/Faccy.git && cd Faccy && bash build.command",
     tags: ["Swift", "macOS 14+", "Apple Vision Framework", "Touch ID", "LocalAuthentication", "Security", "Apple Silicon"],
     links: {
       url: "https://vrlegacy.github.io/Faccy/",
@@ -73,7 +79,10 @@ export const initialProjects: Project[] = [
     status: "open-source",
     featured: false,
     date: "2024",
-    accentColor: "indigo",
+    license: "MIT License",
+    requirements: "Node.js 18+, modern web browser",
+    architecture: "TypeScript React frontend with modular RESTful Express API backend",
+    installCmd: "git clone https://github.com/vrlegacy/Civix-Digital-Civic-Engagement-Petition-Platform.git && cd civix && npm install",
     tags: ["TypeScript", "React", "Node.js", "Express", "REST API", "Tailwind CSS"],
     links: {
       github: "https://github.com/vrlegacy/Civix-Digital-Civic-Engagement-Petition-Platform"
@@ -96,7 +105,10 @@ export const initialProjects: Project[] = [
     status: "open-source",
     featured: false,
     date: "2024",
-    accentColor: "emerald",
+    license: "Open Source",
+    requirements: "Python 3.9+, PyTorch, OpenCV (CPU/CUDA/Apple Metal)",
+    architecture: "CNN image classification pipeline with CLAHE contrast enhancement",
+    installCmd: "git clone https://github.com/vrlegacy/Diabetic-retinopathy-detection-using-machine-learning-concept.git && pip install -r requirements.txt",
     tags: ["Python", "PyTorch", "OpenCV", "CNN", "Computer Vision", "Machine Learning"],
     links: {
       github: "https://github.com/vrlegacy/Diabetic-retinopathy-detection-using-machine-learning-concept"

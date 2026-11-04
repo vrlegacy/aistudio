@@ -35,6 +35,10 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
   const [tagsInput, setTagsInput] = useState('React, TypeScript, Tailwind');
   const [stats, setStats] = useState('');
   const [previewImage, setPreviewImage] = useState('');
+  const [license, setLicense] = useState('MIT License');
+  const [requirements, setRequirements] = useState('');
+  const [architecture, setArchitecture] = useState('');
+  const [installCmd, setInstallCmd] = useState('');
 
   // Links
   const [url, setUrl] = useState('');
@@ -65,6 +69,10 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
       setTagsInput(initialProject.tags.join(', '));
       setStats(initialProject.stats || '');
       setPreviewImage(initialProject.previewImage || '');
+      setLicense(initialProject.license || 'MIT License');
+      setRequirements(initialProject.requirements || '');
+      setArchitecture(initialProject.architecture || '');
+      setInstallCmd(initialProject.installCmd || '');
 
       setUrl(initialProject.links.url || '');
       setGithub(initialProject.links.github || '');
@@ -86,6 +94,10 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
       setTagsInput('');
       setStats('');
       setPreviewImage('');
+      setLicense('MIT License');
+      setRequirements('');
+      setArchitecture('');
+      setInstallCmd('');
       setUrl('');
       setGithub('');
       setAppStore('');
@@ -121,6 +133,10 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
     highlights: highlights.filter(Boolean),
     stats: stats.trim() || undefined,
     previewImage: previewImage.trim() || undefined,
+    license: license.trim() || undefined,
+    requirements: requirements.trim() || undefined,
+    architecture: architecture.trim() || undefined,
+    installCmd: installCmd.trim() || undefined,
   };
 
   const handleAddHighlight = () => {
@@ -154,6 +170,10 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
     status: "${currentProject.status}",
     featured: ${currentProject.featured},
     date: "${currentProject.date}",
+    license: ${currentProject.license ? `"${currentProject.license}"` : 'undefined'},
+    requirements: ${currentProject.requirements ? `"${currentProject.requirements}"` : 'undefined'},
+    architecture: ${currentProject.architecture ? `"${currentProject.architecture}"` : 'undefined'},
+    installCmd: ${currentProject.installCmd ? `"${currentProject.installCmd}"` : 'undefined'},
     tags: ${JSON.stringify(currentProject.tags)},
     links: ${JSON.stringify(currentProject.links, null, 6)},
     highlights: ${JSON.stringify(currentProject.highlights, null, 6)},
@@ -331,8 +351,8 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
                 </div>
               </div>
 
-              {/* Row 3: Category, Status, Release Date, Featured */}
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+              {/* Row 3: Category, Status, Release Date, License, Featured */}
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
                     Category
@@ -341,8 +361,8 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
                     type="text"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    placeholder="e.g. Productivity, Developer Tool"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+                    placeholder="e.g. Utility, Security"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:border-indigo-500 outline-none"
                   />
                 </div>
 
@@ -353,7 +373,7 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value as ProjectStatus)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:border-indigo-500 outline-none"
                   >
                     <option value="live">Live / Released</option>
                     <option value="beta">Beta / TestFlight</option>
@@ -371,21 +391,34 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
                     type="text"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    placeholder="e.g. 2024"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+                    placeholder="e.g. 2026"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:border-indigo-500 outline-none"
                   />
                 </div>
 
-                <div className="flex items-center pt-6">
-                  <label className="flex items-center space-x-2.5 cursor-pointer">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                    License
+                  </label>
+                  <input
+                    type="text"
+                    value={license}
+                    onChange={(e) => setLicense(e.target.value)}
+                    placeholder="e.g. MIT License"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:border-indigo-500 outline-none"
+                  />
+                </div>
+
+                <div className="flex items-center pt-5">
+                  <label className="flex items-center space-x-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={featured}
                       onChange={(e) => setFeatured(e.target.checked)}
                       className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800"
                     />
-                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                      Featured Project
+                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Featured
                     </span>
                   </label>
                 </div>
@@ -495,6 +528,49 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe your design choices, user problems solved, architectures implemented, etc."
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+                />
+              </div>
+
+              {/* Row 5.5: System Requirements & Architecture */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                    System Requirements
+                  </label>
+                  <input
+                    type="text"
+                    value={requirements}
+                    onChange={(e) => setRequirements(e.target.value)}
+                    placeholder="e.g. macOS 14+ (Apple Silicon), Node.js 18+"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-1 focus:ring-indigo-500 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                    Architecture & Privacy Notes
+                  </label>
+                  <input
+                    type="text"
+                    value={architecture}
+                    onChange={(e) => setArchitecture(e.target.value)}
+                    placeholder="e.g. On-device Vision biometrics, zero telemetry"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-1 focus:ring-indigo-500 outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Row 5.7: Terminal Build Command */}
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  Build from Source / Terminal Command
+                </label>
+                <input
+                  type="text"
+                  value={installCmd}
+                  onChange={(e) => setInstallCmd(e.target.value)}
+                  placeholder="e.g. git clone https://... && bash build.command"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-1 focus:ring-indigo-500 outline-none"
                 />
               </div>
 

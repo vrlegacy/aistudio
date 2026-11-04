@@ -10,6 +10,6 @@ export const initialStudioConfig: StudioConfig = {
   avatarUrl: "https://github.com/vrlegacy.png",
   socials: {
     github: "https://github.com/vrlegacy",
-    email: "mailto:hello@vrlegacy.studio"
+    email: "mailto:vrlegacy.care@gmail.com"
   }
 };

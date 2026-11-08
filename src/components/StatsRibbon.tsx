@@ -9,74 +9,38 @@ interface StatsRibbonProps {
 
 export const StatsRibbon: React.FC<StatsRibbonProps> = ({ projects }) => {
   const total = projects.length;
-  const webCount = projects.filter(p => p.platform === 'web').length;
-  const iosCount = projects.filter(p => p.platform === 'ios').length;
-  const androidCount = projects.filter(p => p.platform === 'android').length;
-  const macCount = projects.filter(p => p.platform === 'macos').length;
-  const aiCount = projects.filter(p => p.platform === 'ai').length;
-  const githubCount = projects.filter(p => Boolean(p.links.github)).length;
+  const webCount = projects.filter((p) => p.platform === 'web').length;
+  const iosCount = projects.filter((p) => p.platform === 'ios').length;
+  const androidCount = projects.filter((p) => p.platform === 'android').length;
+  const macCount = projects.filter((p) => p.platform === 'macos').length;
+  const aiCount = projects.filter((p) => p.platform === 'ai').length;
+  const githubCount = projects.filter((p) => Boolean(p.links.github)).length;
 
   const statItems = [
-    {
-      label: "Total Projects",
-      value: total,
-      icon: <Layers className="w-4 h-4 text-indigo-400" />,
-      color: "from-indigo-500/10 to-indigo-500/5 text-indigo-400 border-indigo-500/20"
-    },
-    {
-      label: "Web Apps",
-      value: webCount,
-      icon: <Globe className="w-4 h-4 text-sky-400" />,
-      color: "from-sky-500/10 to-sky-500/5 text-sky-400 border-sky-500/20"
-    },
-    {
-      label: "iOS Apps",
-      value: iosCount,
-      icon: <AppleIcon className="w-4 h-4 text-pink-400" />,
-      color: "from-pink-500/10 to-pink-500/5 text-pink-400 border-pink-500/20"
-    },
-    {
-      label: "Android Apps",
-      value: androidCount,
-      icon: <AndroidIcon className="w-4 h-4 text-emerald-400" />,
-      color: "from-emerald-500/10 to-emerald-500/5 text-emerald-400 border-emerald-500/20"
-    },
-    {
-      label: "macOS Apps",
-      value: macCount,
-      icon: <MacIcon className="w-4 h-4 text-slate-300" />,
-      color: "from-slate-500/10 to-slate-500/5 text-slate-300 border-slate-500/20"
-    },
-    {
-      label: "AI Systems",
-      value: aiCount,
-      icon: <Sparkles className="w-4 h-4 text-purple-400" />,
-      color: "from-purple-500/10 to-purple-500/5 text-purple-400 border-purple-500/20"
-    },
-    {
-      label: "Open Repos",
-      value: githubCount,
-      icon: <Github className="w-4 h-4 text-amber-400" />,
-      color: "from-amber-500/10 to-amber-500/5 text-amber-400 border-amber-500/20"
-    }
+    { label: 'Projects', value: total, icon: <Layers className="w-[18px] h-[18px]" />, tint: 'text-indigo-500' },
+    { label: 'Web', value: webCount, icon: <Globe className="w-[18px] h-[18px]" />, tint: 'text-sky-500' },
+    { label: 'iOS', value: iosCount, icon: <AppleIcon size={18} />, tint: 'text-pink-500' },
+    { label: 'Android', value: androidCount, icon: <AndroidIcon size={18} />, tint: 'text-emerald-500' },
+    { label: 'macOS', value: macCount, icon: <MacIcon size={18} />, tint: 'text-slate-500 dark:text-slate-300' },
+    { label: 'AI / ML', value: aiCount, icon: <Sparkles className="w-[18px] h-[18px]" />, tint: 'text-purple-500' },
+    { label: 'Open Repos', value: githubCount, icon: <Github className="w-[18px] h-[18px]" />, tint: 'text-amber-500' },
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+    <div id="stats" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
         {statItems.map((stat, i) => (
           <div
             key={i}
-            className={`p-3 rounded-xl border bg-gradient-to-br backdrop-blur-sm ${stat.color} transition hover:scale-[1.02]`}
+            className="glass rounded-3xl p-4 shadow-glass dark:shadow-glass-dark transition-transform duration-300 hover:-translate-y-1 animate-fade-up"
+            style={{ animationDelay: `${i * 50}ms` }}
           >
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-medium tracking-wide uppercase text-slate-500 dark:text-slate-400">
-                {stat.label}
-              </span>
-              {stat.icon}
-            </div>
-            <div className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <div className={`${stat.tint} mb-3`}>{stat.icon}</div>
+            <div className="text-3xl font-semibold tracking-tight text-ink dark:text-white tabular-nums">
               {stat.value}
+            </div>
+            <div className="mt-0.5 text-[12px] font-medium text-ink-soft dark:text-white/50">
+              {stat.label}
             </div>
           </div>
         ))}
@@ -84,4 +48,3 @@ export const StatsRibbon: React.FC<StatsRibbonProps> = ({ projects }) => {
     </div>
   );
 };
-

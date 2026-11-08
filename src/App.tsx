@@ -7,7 +7,8 @@ import {
   resetProjectsToDefault, 
   getStoredConfig 
 } from './utils/storage';
-import { Header } from './components/Header';
+import { DynamicIsland } from './components/DynamicIsland';
+import { Aurora } from './components/Aurora';
 import { Hero } from './components/Hero';
 import { StatsRibbon } from './components/StatsRibbon';
 import { FilterBar, FilterPlatform, SortOption } from './components/FilterBar';
@@ -158,10 +159,16 @@ export default function App() {
   }, [projects, selectedPlatform, statusFilter, searchQuery, sortBy]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
-      {/* Sticky Top Navigation */}
-      <Header
+    <div id="top" className="relative min-h-screen text-ink dark:text-white flex flex-col font-sans">
+      <Aurora />
+
+      {/* Floating Dynamic Island navigation */}
+      <DynamicIsland
         config={config}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        filteredCount={filteredProjects.length}
+        totalProjects={projects.length}
         onOpenAddModal={() => {
           setEditingProject(null);
           setIsAddModalOpen(true);
@@ -174,88 +181,97 @@ export default function App() {
       {/* Main Studio Body */}
       <main className="flex-1">
         {/* Hero Section */}
-        <Hero
-          config={config}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          totalProjects={projects.length}
-          filteredCount={filteredProjects.length}
-        />
+        <Hero config={config} totalProjects={projects.length} />
 
         {/* Studio Platform Metrics Ribbon */}
         <StatsRibbon projects={projects} />
 
-        {/* Filter, Sort & View Mode Bar */}
-        <FilterBar
-          selectedPlatform={selectedPlatform}
-          onSelectPlatform={setSelectedPlatform}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          platformCounts={platformCounts}
-        />
-
-        {/* Projects Showcase Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredProjects.length === 0 ? (
-            /* Empty State */
-            <div className="my-16 py-12 px-6 rounded-3xl bg-white/40 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800 text-center max-w-xl mx-auto">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-500 mx-auto flex items-center justify-center mb-4">
-                <SearchX className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                No matching projects found
-              </h3>
-              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                {searchQuery
-                  ? `No applications matched "${searchQuery}". Try a different keyword or reset filters.`
-                  : 'No projects registered for this category yet.'}
+        {/* Work section */}
+        <section id="work" className="scroll-mt-28 mt-16 sm:mt-24">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-ink dark:text-white">
+                Selected Work
+              </h2>
+              <p className="mt-1.5 text-[15px] text-ink-soft dark:text-white/50">
+                {filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}
+                {searchQuery && <> · matching “{searchQuery}”</>}
               </p>
+            </div>
+          </div>
 
-              <div className="mt-6 flex items-center justify-center space-x-3">
-                {searchQuery && (
+          {/* Filter, Sort & View Mode Bar */}
+          <FilterBar
+            selectedPlatform={selectedPlatform}
+            onSelectPlatform={setSelectedPlatform}
+            statusFilter={statusFilter}
+            onStatusFilterChange={setStatusFilter}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+            platformCounts={platformCounts}
+          />
+
+          {/* Projects Showcase Container */}
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+            {filteredProjects.length === 0 ? (
+              /* Empty State */
+              <div className="my-10 py-16 px-6 rounded-[32px] glass text-center max-w-xl mx-auto shadow-glass dark:shadow-glass-dark animate-fade-up">
+                <div className="w-14 h-14 rounded-2xl bg-apple-blue/10 text-apple-blue mx-auto flex items-center justify-center mb-5">
+                  <SearchX className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-semibold text-ink dark:text-white">
+                  No matching projects
+                </h3>
+                <p className="mt-2 text-[15px] text-ink-soft dark:text-white/50">
+                  {searchQuery
+                    ? `Nothing matched “${searchQuery}”. Try a different keyword or clear the filters.`
+                    : 'No projects registered for this category yet.'}
+                </p>
+                <div className="mt-7 flex items-center justify-center gap-3">
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="px-5 py-2.5 rounded-full text-[13px] font-semibold glass hover:glass-strong text-ink dark:text-white transition"
+                    >
+                      Clear search
+                    </button>
+                  )}
                   <button
-                    onClick={() => setSearchQuery('')}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+                    onClick={() => {
+                      setEditingProject(null);
+                      setIsAddModalOpen(true);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-[13px] font-semibold text-white bg-apple-blue hover:brightness-110 transition shadow-sm"
                   >
-                    Clear Search
+                    <Plus className="w-4 h-4" />
+                    Add a project
                   </button>
-                )}
-                <button
-                  onClick={() => {
-                    setEditingProject(null);
-                    setIsAddModalOpen(true);
-                  }}
-                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-md shadow-indigo-600/20"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Register Application</span>
-                </button>
+                </div>
               </div>
-            </div>
-          ) : (
-            /* Projects Grid or List */
-            <div
-              className={
-                viewMode === 'grid'
-                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-                  : 'space-y-3'
-              }
-            >
-              {filteredProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  onSelect={(p) => setSelectedProject(p)}
-                  viewMode={viewMode}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+            ) : (
+              /* Projects Grid or List */
+              <div
+                className={
+                  viewMode === 'grid'
+                    ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'
+                    : 'space-y-3'
+                }
+              >
+                {filteredProjects.map((project, i) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    onSelect={(p) => setSelectedProject(p)}
+                    viewMode={viewMode}
+                    index={i}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
       </main>
 
       {/* Footer */}

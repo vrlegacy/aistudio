@@ -1,236 +1,167 @@
 import React from 'react';
 import { Project } from '../types/project';
 import { PlatformIcon, getPlatformLabel } from './PlatformIcon';
-import { Github, Globe, ArrowUpRight, CheckCircle2, Download, HardDrive } from 'lucide-react';
+import { Github, Globe, ArrowUpRight, CheckCircle2, Download } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
   onSelect: (project: Project) => void;
   viewMode?: 'grid' | 'compact';
+  index?: number;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onSelect,
   viewMode = 'grid',
+  index = 0,
 }) => {
-  // Compact List View
+  const statusDot =
+    project.status === 'live'
+      ? 'bg-emerald-500'
+      : project.status === 'beta' || project.status === 'in-progress'
+      ? 'bg-amber-500'
+      : project.status === 'open-source'
+      ? 'bg-sky-500'
+      : 'bg-slate-400';
+
+  /* ---------- Compact list row ---------- */
   if (viewMode === 'compact') {
     return (
-      <div 
+      <div
         onClick={() => onSelect(project)}
-        className="group relative flex flex-col md:flex-row items-start md:items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 transition duration-150 cursor-pointer"
+        className="group glass hover:glass-strong rounded-3xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer transition-all duration-300 hover:-translate-y-0.5 shadow-glass dark:shadow-glass-dark animate-fade-up"
+        style={{ animationDelay: `${index * 40}ms` }}
       >
-        <div className="flex items-start sm:items-center space-x-3.5 mb-2 md:mb-0">
-          <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shrink-0">
-            <PlatformIcon platform={project.platform} size={18} />
-          </div>
-          <div>
-            <div className="flex items-center space-x-2 flex-wrap">
-              <h3 className="font-semibold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                {project.title}
-              </h3>
-              <span className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
-                {getPlatformLabel(project.platform)}
-              </span>
-              {project.license && (
-                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono text-slate-500 border border-slate-300 dark:border-slate-700">
-                  {project.license}
-                </span>
-              )}
+        <div className="flex items-center gap-3.5 min-w-0">
+          {project.previewImage ? (
+            <img src={project.previewImage} alt="" className="w-11 h-11 rounded-2xl object-cover bg-white/50 dark:bg-white/5 shrink-0 ring-1 ring-black/5 dark:ring-white/10" />
+          ) : (
+            <div className="grid place-items-center w-11 h-11 rounded-2xl bg-white/50 dark:bg-white/5 text-ink dark:text-white shrink-0 ring-1 ring-black/5 dark:ring-white/10">
+              <PlatformIcon platform={project.platform} size={20} />
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
-              {project.tagline}
-            </p>
+          )}
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold text-ink dark:text-white truncate">{project.title}</h3>
+              <span className={`w-1.5 h-1.5 rounded-full ${statusDot} shrink-0`} />
+            </div>
+            <p className="text-[13px] text-ink-soft dark:text-white/50 truncate">{project.tagline}</p>
           </div>
         </div>
 
-        <div className="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-end">
-          <div className="hidden lg:flex items-center space-x-1.5">
-            {project.tags.slice(0, 3).map((tag, i) => (
-              <span key={i} className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex items-center space-x-1.5" onClick={(e) => e.stopPropagation()}>
-            {project.links.url && (
-              <a
-                href={project.links.url}
-                target="_blank"
-                rel="noreferrer"
-                title="Website"
-                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 transition"
-              >
-                <Globe className="w-4 h-4" />
-              </a>
-            )}
-            {project.links.github && (
-              <a
-                href={project.links.github}
-                target="_blank"
-                rel="noreferrer"
-                title="GitHub Repo"
-                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 transition"
-              >
-                <Github className="w-4 h-4" />
-              </a>
-            )}
-            <button
-              onClick={() => onSelect(project)}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 ml-1 transition"
-            >
-              Details →
-            </button>
-          </div>
+        <div className="flex items-center gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
+          <span className="hidden lg:inline px-2.5 py-1 rounded-full text-[11px] font-medium text-ink-soft dark:text-white/55 bg-black/[0.04] dark:bg-white/5">
+            {getPlatformLabel(project.platform)}
+          </span>
+          {project.links.github && (
+            <a href={project.links.github} target="_blank" rel="noreferrer" className="grid place-items-center w-9 h-9 rounded-full text-ink-soft dark:text-white/55 hover:bg-black/[0.05] dark:hover:bg-white/10 transition">
+              <Github className="w-4 h-4" />
+            </a>
+          )}
+          <button
+            onClick={() => onSelect(project)}
+            className="px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-apple-blue hover:brightness-110 transition"
+          >
+            View
+          </button>
         </div>
       </div>
     );
   }
 
-  // Standard Grid Card
+  /* ---------- Grid card ---------- */
   return (
     <div
       onClick={() => onSelect(project)}
-      className="group relative flex flex-col justify-between rounded-xl bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-650 border border-slate-200 dark:border-slate-800 p-5 transition duration-150 cursor-pointer shadow-xs hover:shadow-md"
+      className="group relative flex flex-col glass hover:glass-strong rounded-4xl p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1.5 shadow-glass dark:shadow-glass-dark animate-fade-up overflow-hidden"
+      style={{ animationDelay: `${index * 60}ms` }}
     >
-      <div>
-        {/* Top Header Row */}
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="flex items-center space-x-2.5">
-            {project.previewImage ? (
-              <img 
-                src={project.previewImage} 
-                alt="" 
-                className="w-7 h-7 rounded-lg object-contain bg-slate-100 dark:bg-slate-800 p-0.5 border border-slate-200 dark:border-slate-700" 
-              />
-            ) : (
-              <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                <PlatformIcon platform={project.platform} size={15} />
-              </div>
-            )}
-            <div>
-              <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                {getPlatformLabel(project.platform)}
-              </span>
-            </div>
-          </div>
+      {/* sheen on hover */}
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(400px_circle_at_var(--x,50%)_0%,rgba(10,132,255,0.12),transparent_70%)]" />
 
-          <div className="flex items-center space-x-1.5">
-            {project.license && (
-              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono text-slate-500 border border-slate-200 dark:border-slate-800">
-                {project.license}
-              </span>
-            )}
-            <span className="text-xs font-mono text-slate-400">
-              {project.date}
+      {/* Header */}
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="flex items-center gap-3">
+          {project.previewImage ? (
+            <img src={project.previewImage} alt="" className="w-14 h-14 rounded-[18px] object-cover bg-white/60 dark:bg-white/5 ring-1 ring-black/5 dark:ring-white/10 shadow-sm" />
+          ) : (
+            <div className="grid place-items-center w-14 h-14 rounded-[18px] bg-gradient-to-br from-white/80 to-white/30 dark:from-white/10 dark:to-white/5 text-ink dark:text-white ring-1 ring-black/5 dark:ring-white/10">
+              <PlatformIcon platform={project.platform} size={26} />
+            </div>
+          )}
+          <div>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-soft dark:text-white/50">
+              <span className={`w-1.5 h-1.5 rounded-full ${statusDot}`} />
+              {getPlatformLabel(project.platform)}
             </span>
+            <div className="mt-0.5 text-[11px] font-mono text-ink-soft/70 dark:text-white/35">{project.date}</div>
           </div>
         </div>
+        <ArrowUpRight className="w-5 h-5 text-ink-soft/40 dark:text-white/30 group-hover:text-apple-blue group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+      </div>
 
-        {/* Title & Tagline */}
-        <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center justify-between">
-          <span>{project.title}</span>
-          <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 transition-transform" />
-        </h3>
+      {/* Title + tagline */}
+      <h3 className="text-xl font-semibold tracking-tight text-ink dark:text-white">{project.title}</h3>
+      <p className="mt-1 text-[14px] font-medium text-ink-soft dark:text-white/60 line-clamp-2">{project.tagline}</p>
 
-        <p className="mt-1 text-xs font-medium text-slate-600 dark:text-slate-300 line-clamp-2">
-          {project.tagline}
-        </p>
+      {/* Description */}
+      <p className="mt-3 text-[13px] leading-relaxed text-ink-soft dark:text-white/45 line-clamp-3">{project.description}</p>
 
-        {/* Short Description */}
-        <p className="mt-2.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3">
-          {project.description}
-        </p>
+      {/* Highlights */}
+      {project.highlights && project.highlights.length > 0 && (
+        <div className="mt-4 space-y-1.5">
+          {project.highlights.slice(0, 2).map((h, i) => (
+            <div key={i} className="flex items-start gap-2 text-[12px] text-ink-soft dark:text-white/55">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+              <span className="line-clamp-1">{h}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
-        {/* Requirements indicator if available */}
-        {project.requirements && (
-          <div className="mt-3 flex items-center space-x-1.5 text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-850 px-2.5 py-1.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
-            <HardDrive className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span className="truncate">{project.requirements}</span>
-          </div>
-        )}
+      {/* Spacer pushes footer down */}
+      <div className="flex-1 min-h-4" />
 
-        {/* 2 Key feature bullets */}
-        {project.highlights && project.highlights.length > 0 && (
-          <div className="mt-3 space-y-1.5">
-            {project.highlights.slice(0, 2).map((h, i) => (
-              <div key={i} className="flex items-start space-x-1.5 text-[11px] text-slate-600 dark:text-slate-400">
-                <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
-                <span className="line-clamp-1">{h}</span>
-              </div>
-            ))}
-          </div>
+      {/* Tags */}
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {project.tags.slice(0, 4).map((tag, i) => (
+          <span key={i} className="px-2.5 py-1 rounded-full text-[11px] font-medium text-ink-soft dark:text-white/55 bg-black/[0.04] dark:bg-white/5">
+            {tag}
+          </span>
+        ))}
+        {project.tags.length > 4 && (
+          <span className="px-2 py-1 rounded-full text-[11px] font-medium text-ink-soft/60 dark:text-white/35">
+            +{project.tags.length - 4}
+          </span>
         )}
       </div>
 
-      {/* Bottom Area: Tags & Direct Labeled Action Links */}
-      <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
-        {/* Tech Tags */}
-        <div className="flex flex-wrap gap-1 mb-3">
-          {project.tags.slice(0, 4).map((tag, i) => (
-            <span
-              key={i}
-              className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
-            >
-              {tag}
-            </span>
-          ))}
-          {project.tags.length > 4 && (
-            <span className="px-1 py-0.5 rounded text-[10px] font-mono text-slate-400">
-              +{project.tags.length - 4}
-            </span>
+      {/* Actions */}
+      <div className="flex items-center justify-between pt-4 border-t border-black/5 dark:border-white/10" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-1.5">
+          {project.links.url && (
+            <a href={project.links.url} target="_blank" rel="noreferrer" title="Website" className="grid place-items-center w-9 h-9 rounded-full text-ink-soft dark:text-white/55 hover:bg-black/[0.05] dark:hover:bg-white/10 transition">
+              <Globe className="w-[18px] h-[18px]" />
+            </a>
+          )}
+          {project.links.github && (
+            <a href={project.links.github} target="_blank" rel="noreferrer" title="GitHub" className="grid place-items-center w-9 h-9 rounded-full text-ink-soft dark:text-white/55 hover:bg-black/[0.05] dark:hover:bg-white/10 transition">
+              <Github className="w-[18px] h-[18px]" />
+            </a>
+          )}
+          {project.links.macAppStore && (
+            <a href={project.links.macAppStore} target="_blank" rel="noreferrer" title="Download" className="grid place-items-center w-9 h-9 rounded-full text-ink-soft dark:text-white/55 hover:bg-black/[0.05] dark:hover:bg-white/10 transition">
+              <Download className="w-[18px] h-[18px]" />
+            </a>
           )}
         </div>
-
-        {/* Direct Action Links Bar with Clear Text Labels */}
-        <div className="flex items-center justify-between" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
-            {project.links.url && (
-              <a
-                href={project.links.url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-xs font-medium text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-              >
-                <Globe className="w-3 h-3 text-sky-500" />
-                <span>Website</span>
-              </a>
-            )}
-
-            {project.links.github && (
-              <a
-                href={project.links.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-xs font-medium text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-              >
-                <Github className="w-3 h-3" />
-                <span>GitHub</span>
-              </a>
-            )}
-
-            {project.links.macAppStore && (
-              <a
-                href={project.links.macAppStore}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-xs font-medium text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-              >
-                <Download className="w-3 h-3 text-emerald-500" />
-                <span>DMG</span>
-              </a>
-            )}
-          </div>
-
-          <button
-            onClick={() => onSelect(project)}
-            className="text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:underline"
-          >
-            Details →
-          </button>
-        </div>
+        <button
+          onClick={() => onSelect(project)}
+          className="px-4 py-2 rounded-full text-[13px] font-semibold text-apple-blue hover:bg-apple-blue/10 transition"
+        >
+          Details
+        </button>
       </div>
     </div>
   );
